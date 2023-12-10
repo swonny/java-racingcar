@@ -2,7 +2,7 @@ package model;
 
 public class Car {
 
-    private static final int MINIMUM_VALUE_OF_MOVING = 0;
+    private static final int MINIMUM_VALUE_OF_MOVING = 4;
     private static final int MAXIMUM_VALUE_OF_MOVING = 9;
 
     private final String name;
