@@ -3,9 +3,13 @@ package view;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class InputView {
 
+    private static final String CAR_NAME_DELIMITER = ",";
     private final BufferedReader reader;
 
     public InputView() {
@@ -18,6 +22,17 @@ public class InputView {
         final CallBack<Integer> execution = () -> {
             final String readNumber = reader.readLine();
             return Integer.parseInt(readNumber);
+        };
+
+        return read(execution);
+    }
+
+    public List<String> readCarNames() {
+        System.out.println("경주할 자동차 이름을 입력하세요(이름은 쉼표(,)를 기준으로 구분).");
+        final CallBack<List<String>> execution = () -> {
+            final String carNames = reader.readLine();
+            return Arrays.stream(carNames.split(CAR_NAME_DELIMITER))
+                         .collect(Collectors.toUnmodifiableList());
         };
 
         return read(execution);
