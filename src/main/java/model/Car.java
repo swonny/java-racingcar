@@ -46,4 +46,12 @@ public class Car {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "name='" + name + '\'' +
+                ", position=" + position +
+                '}';
+    }
 }
