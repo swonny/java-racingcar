@@ -1,15 +1,13 @@
 package controller;
 
 import domain.Car;
-import domain.CarFactory;
-import domain.Cars;
+import domain.RaceGame;
+import domain.RandomMoveStrategy;
+import domain.ResultOfRoundDto;
 import view.InputView;
 import view.OutputView;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 public class GameController {
@@ -26,33 +24,25 @@ public class GameController {
         final List<String> carNames = inputView.readCarNames();
         final int numberOfRound = inputView.readNumberOfRound();
 
-        final Cars cars = startGame(carNames, numberOfRound);
-        final List<String> winnerCars = cars.calculateWinners()
-                                            .stream()
-                                            .map(Car::getName)
-                                            .collect(Collectors.toUnmodifiableList());
-        outputView.printWinners(winnerCars);
+        final RaceGame raceGame = RaceGame.of(new RandomMoveStrategy(), carNames, numberOfRound);
+        startGame(raceGame);
     }
 
-    private Cars startGame(final List<String> carNames, final int numberOfRound) {
-        final List<Car> cars = CarFactory.from(carNames);
-        for (int round = 0; round < numberOfRound; round++) {
-            final Map<String, Integer> results = playGame(cars);
-            outputView.printResult(results);
+    private void startGame(final RaceGame raceGame) {
+        while (raceGame.isOnGoing()) {
+            final List<Car> result = raceGame.play();
+            final ResultOfRoundDto resultOfRoundDto = ResultOfRoundDto.from(result);
+            outputView.printResult(resultOfRoundDto);
         }
 
-        return new Cars(cars);
+        calculateWinners(raceGame);
     }
 
-    private Map<String, Integer> playGame(final List<Car> cars) {
-        final Random random = new Random();
-        final Map<String, Integer> result = new HashMap<>();
-        cars.forEach(car -> {
-            final int randomValue = random.nextInt(10);
-            car.move(randomValue);
-            result.put(car.getName(), car.getPosition());
-        });
-
-        return result;
+    private void calculateWinners(final RaceGame raceGame) {
+        final List<String> winnerCarNames = raceGame.calculateWinners()
+                                                    .stream()
+                                                    .map(Car::getName)
+                                                    .collect(Collectors.toUnmodifiableList());
+        outputView.printWinners(winnerCarNames);
     }
 }
