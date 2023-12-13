@@ -1,8 +1,8 @@
 package controller;
 
-import model.Car;
-import model.CarFactory;
-import model.Cars;
+import domain.Car;
+import domain.CarFactory;
+import domain.Cars;
 import view.InputView;
 import view.OutputView;
 
