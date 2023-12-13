@@ -24,7 +24,7 @@ class CarTest {
             car.move(random);
 
             // then
-            assertThat(car.getPosition()).isEqualTo(new Position(1));
+            assertThat(car.getPosition()).isEqualTo(1);
         }
 
         @ParameterizedTest
@@ -37,7 +37,7 @@ class CarTest {
             자동차.move(random);
 
             // then
-            assertThat(자동차.getPosition()).isEqualTo(new Position(0));
+            assertThat(자동차.getPosition()).isEqualTo(0);
         }
 
         @ParameterizedTest
