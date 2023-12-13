@@ -4,32 +4,33 @@ import java.util.List;
 
 public class RaceGame {
 
+    private static final int ZERO = 0;
     private final MoveStrategy moveStrategy;
     private final Cars cars;
-    private int numberOfRace;
+    private RacingCount racingCount;
 
-    private RaceGame(final MoveStrategy moveStrategy, final Cars cars, final int numberOfRace) {
+    private RaceGame(final MoveStrategy moveStrategy, final Cars cars, final RacingCount racingCount) {
         this.moveStrategy = moveStrategy;
         this.cars = cars;
-        this.numberOfRace = numberOfRace;
+        this.racingCount = racingCount;
     }
 
-    public static RaceGame of(final MoveStrategy moveStrategy, final List<String> carNames, final int numberOfRace) {
+    public static RaceGame of(final MoveStrategy moveStrategy, final List<String> carNames, final int racingCount) {
         return new RaceGame(
                 moveStrategy,
                 new Cars(CarFactory.from(carNames)),
-                numberOfRace
+                new RacingCount(racingCount)
         );
     }
 
     public List<Car> play() {
         cars.moveAll(moveStrategy);
-        numberOfRace--;
+        racingCount.decrease();
         return cars.getCars();
     }
 
     public boolean isOnGoing() {
-        return numberOfRace > 0;
+        return racingCount.biggerThan(ZERO);
     }
 
     public List<Car> calculateWinners() {
