@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,8 +19,8 @@ public class Cars {
 
     public List<Car> calculateWinners() {
         final int maxPosition = cars.stream()
-                                    .map(Car::getPosition)
-                                    .max(Comparator.comparing(x -> x))
+                                    .mapToInt(Car::getPosition)
+                                    .max()
                                     .orElse(START_POSITION);
         return cars.stream()
                    .filter(car -> car.getPosition() == maxPosition)
@@ -30,5 +29,12 @@ public class Cars {
 
     public List<Car> getCars() {
         return Collections.unmodifiableList(cars);
+    }
+
+    @Override
+    public String toString() {
+        return "Cars{" +
+                "cars=" + cars +
+                '}';
     }
 }

@@ -30,4 +30,11 @@ public class RacingCount {
     public int hashCode() {
         return Objects.hash(racingCount);
     }
+
+    @Override
+    public String toString() {
+        return "RacingCount{" +
+                "racingCount=" + racingCount +
+                '}';
+    }
 }

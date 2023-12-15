@@ -25,7 +25,7 @@ public class RaceGame {
 
     public List<Car> play() {
         cars.moveAll(moveStrategy);
-        racingCount.decrease();
+        racingCount = racingCount.decrease();
         return cars.getCars();
     }
 
@@ -35,5 +35,14 @@ public class RaceGame {
 
     public List<Car> calculateWinners() {
         return cars.calculateWinners();
+    }
+
+    @Override
+    public String toString() {
+        return "RaceGame{" +
+                "moveStrategy=" + moveStrategy +
+                ", cars=" + cars +
+                ", racingCount=" + racingCount +
+                '}';
     }
 }
